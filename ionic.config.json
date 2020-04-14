@@ -1,0 +1,7 @@
+{
+  "name": "chat-app-front",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
