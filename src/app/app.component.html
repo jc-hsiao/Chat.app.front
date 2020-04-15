@@ -2,8 +2,8 @@
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
-        <ion-list id="inbox-list">
-          <ion-list-header>Chat App</ion-list-header>
+        <ion-list id="main-list">
+          <ion-list-header>Puppy Chat</ion-list-header>
           <ion-note>{{ currentUser.email }}</ion-note>
 
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
@@ -12,16 +12,43 @@
               <ion-label>{{ p.title }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
+
         </ion-list>
 
-        <ion-list id="labels-list">
+        <ion-list id="chat-list">
+          <ion-list-header>Channels</ion-list-header>
+
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of channelPages; let g = null">
+            <ion-item (click)="selectedIndex = g" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" [class.selected]="selectedIndex == g">
+              <ion-icon slot="start" ios="people-outline" md="people-sharp"></ion-icon>
+              <ion-label>{{ p.title }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <!-- <ion-item>
+            <ion-icon slot="start" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
+            <ion-label>test</ion-label>
+          </ion-item> -->
+
+        </ion-list>
+        <ion-list id="chat-list">
+
+          <ion-list-header>Direct Messages</ion-list-header>
+
+          <!-- <ion-item>
+            <ion-icon slot="start" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
+            <ion-label>test</ion-label>
+          </ion-item> -->
+        </ion-list>
+
+        <!-- <ion-list id="labels-list">
           <ion-list-header>Labels</ion-list-header>
 
           <ion-item *ngFor="let label of labels" lines="none">
             <ion-icon slot="start" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
             <ion-label>{{ label }}</ion-label>
           </ion-item>
-        </ion-list>
+        </ion-list> -->
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>
