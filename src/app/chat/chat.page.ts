@@ -34,8 +34,9 @@ export class ChatPage implements OnInit, OnDestroy{
       takeUntil(this.destroyed)
     ).subscribe(() => {
       //this.channelService.currentChannelIndex
-      this.messageService.setupChannelMsg(1);
-      this.pageTitle = this.channelService.currentChannel.name;
+      this.pageTitle = this.channelService.currentChannel.name;    
+      console.log("id: "+this.channelService.currentChannel.id);  
+      this.messageService.setupChannelMsg(this.channelService.currentChannel.id);
       this.messages = this.messageService.messages;
     });
   }
