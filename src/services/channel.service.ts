@@ -12,7 +12,6 @@ export class ChannelService {
 
   currentChannel: Channel = new Channel();
   currentDM: DM = new DM();
-  public currentChannelIndex: number;
   
   channelList: Iterable<Channel> = [];
   dmList: Iterable<DM> = [];
@@ -43,7 +42,7 @@ export class ChannelService {
 
   setcurrentChannel(channelPage:ChannelPage){
     this.currentChannel = channelPage.channel;
-    console.log(channelPage.channel.name+" saved");
+    console.log(channelPage.channel.name+" saved, id="+channelPage.channel.id);
   }
   
   mapChannelToChat(){
