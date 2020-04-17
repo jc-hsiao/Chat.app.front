@@ -5,8 +5,10 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { LoginService } from '../services/login.service';
 import { ChannelService } from '../services/channel.service';
-import { User } from '../../src/models/user';
-import { Channel } from '../../src/models/channel';
+import { User } from 'src/models/user';
+import { Channel } from 'src/models/channel';
+import { ChannelPage } from 'src/models/channelPage';
+import { DM } from 'src/models/dm';
 
 @Component({
   selector: 'app-root',
@@ -15,10 +17,16 @@ import { Channel } from '../../src/models/channel';
 })
 export class AppComponent implements OnInit {
   public selectedIndex = 0;
-  currentUser: User = new User();
-  currentChannels: Iterable<Channel> = [];
+  public selectedChannelIndex = 0;
+  public selectedDMIndex = 0;
+  public channelPages:ChannelPage[];
+  public dmPages = [];
 
-  //dm array
+  public currentUser: User = new User();
+  public channels: Iterable<Channel> = [];
+  public dms: Iterable<DM> = [];
+  
+
   public appPages = [
     {
       title: 'Welcome',
@@ -32,10 +40,6 @@ export class AppComponent implements OnInit {
     }
   ];
 
-  public channelPages = [
-  ];
-
-
   //public labels = ['test','test2'];
 
   constructor(
@@ -48,44 +52,22 @@ export class AppComponent implements OnInit {
     this.initializeApp();
   }
 
-
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+    this.currentUser = this.loginService.getUser();
+    this.channels = this.channelService.getChannels();
+    this.dms = this.channelService.getDms();    
+    this.channelPages = this.channelService.mapChannelToChat();
+    this.dmPages = this.channelService.mapDMToChat();
   }
 
   ngOnInit() {
-    // const path = window.location.pathname.split('folder/')[1];
-    // if (path !== undefined) {
-    //   this.selectedIndex =
-    //    this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
-    // }
-    this.setUp();
-    
   }
 
-  setUp(){
-    this.loginService.getUserData().subscribe(user => {
-      this.currentUser = user;
-    })    
-    this.channelService.getAllChannel().subscribe(it => {
-      this.currentChannels = it;
-      this.mapToChat();
-    })    
+  clicked(channelPage:ChannelPage){
+    this.channelService.setcurrentChannel(channelPage);
   }
-
-  mapToChat(){
-    for (let ch of this.currentChannels) {
-      var channel = {
-        title: ch.name,
-        url: '/chat'+ ch.id
-      };
-      this.channelPages.push(channel);
-    }    
-  }
-
-
-
 }

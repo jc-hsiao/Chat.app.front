@@ -15,9 +15,7 @@ export class UserinfoPage implements OnInit {
   currentUser: User = new User();
 
   ngOnInit() {
-    this.loginService.getUserData().subscribe(user => {
-      this.currentUser = user;
-    })    
+    this.currentUser = this.loginService.getUser();
   }
 
 }

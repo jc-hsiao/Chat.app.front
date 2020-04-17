@@ -21,7 +21,7 @@ const routes: Routes = [
     loadChildren: () => import('./userinfo/userinfo.module').then( m => m.UserinfoPageModule)
   },
   {
-    path: 'chat',
+    path: 'chat-channel',
     loadChildren: () => import('./chat/chat.module').then( m => m.ChatPageModule)
   }
 ];
@@ -31,7 +31,7 @@ const routes: Routes = [
     TestComponent
   ],
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })
   ],
   exports: [RouterModule]
 })
