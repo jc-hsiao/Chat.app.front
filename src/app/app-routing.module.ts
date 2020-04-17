@@ -5,7 +5,7 @@ import { TestComponent } from './test/test.component'
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'welcome',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
@@ -23,6 +23,10 @@ const routes: Routes = [
   {
     path: 'chat-channel',
     loadChildren: () => import('./chat/chat.module').then( m => m.ChatPageModule)
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   }
 ];
 

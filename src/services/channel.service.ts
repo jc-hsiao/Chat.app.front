@@ -12,7 +12,7 @@ export class ChannelService {
 
   currentChannel: Channel = new Channel();
   currentDM: DM = new DM();
-  currentChannelIndex: number;
+  public currentChannelIndex: number;
   
   channelList: Iterable<Channel> = [];
   dmList: Iterable<DM> = [];

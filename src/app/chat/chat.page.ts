@@ -1,10 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ChannelService } from '../../services/channel.service';
 import { RouterEvent, NavigationEnd, Router } from '@angular/router';
-import { Channel } from 'src/models/channel';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { ChannelPage } from 'src/models/channelPage';
+import { MessageService } from 'src/services/message.service';
+import { Message } from 'src/models/message';
+import { Channel } from 'src/models/channel';
 
 @Component({
   selector: 'app-chat',
@@ -13,10 +15,17 @@ import { ChannelPage } from 'src/models/channelPage';
 })
 export class ChatPage implements OnInit, OnDestroy{
 
-  constructor(private channelServices: ChannelService,private router: Router) { }
+  constructor(
+    private channelService: ChannelService, 
+    private messageService: MessageService,
+    private router: Router)
+     { }
 
   public destroyed =  new Subject<ChannelPage>();
   public pageTitle: string = "";
+  public messages: Iterable<Message> = [];
+  //public currentChannel:Channel = new Channel();
+  public currentChannelIndex:number  ;
 
 
   ngOnInit() {
@@ -24,8 +33,10 @@ export class ChatPage implements OnInit, OnDestroy{
       filter((event: RouterEvent) => event instanceof NavigationEnd),
       takeUntil(this.destroyed)
     ).subscribe(() => {
-      this.pageTitle = this.channelServices.currentChannel.name;
-      
+      //this.channelService.currentChannelIndex
+      this.messageService.setupChannelMsg(1);
+      this.pageTitle = this.channelService.currentChannel.name;
+      this.messages = this.messageService.messages;
     });
   }
 

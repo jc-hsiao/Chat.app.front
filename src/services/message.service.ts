@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClientModule, HttpClient  } from '@angular/common/http'
+import { HttpClientModule, HttpClient, HttpHeaders  } from '@angular/common/http'
 import { Message } from 'src/models/message';
 
 @Injectable({
@@ -11,18 +11,16 @@ export class MessageService {
 
   public messages: Iterable<Message> = [];
 
-  getAllMsgByChannel(id){
-    this.http.get<Iterable<Message>>("http://localhost:8080/message/allByChannel/"+id).subscribe(msg => {
+
+  setupChannelMsg(channelId){
+    this.http.get<Iterable<Message>>("http://localhost:8080/msg/allByChannel/"+channelId).subscribe(msg => {
       this.messages = msg;
     })      
   }
 
-  getAllMsgByDM(id){
-    this.http.get<Iterable<Message>>("http://localhost:8080/message/allByDm/"+id).subscribe(msg => {
+  setupDmMsg(dmId){
+    this.http.get<Iterable<Message>>("http://localhost:8080/msg/allByDm/"+dmId).subscribe(msg => {
       this.messages = msg;
     })          
   }
-
-  //allByChannel/{id}
-  //allByDm/{id}
 }
