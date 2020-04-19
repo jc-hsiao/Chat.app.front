@@ -1,44 +1,32 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { TestComponent } from './test/test.component'
+import { IonicModule } from '@ionic/angular';
+import { WelcomeComponent } from 'src/app/components/welcome/welcome.component'
+import { ProfileComponent } from 'src/app/components/profile/profile.component'
 
 const routes: Routes = [
+  { path: '', redirectTo: '/welcome', pathMatch: 'full' },
   {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full'
+    path: 'welcome', 
+    component: WelcomeComponent
   },
   {
-    path: 'test',
-    component: TestComponent
-  },  
-  {
-    path: 'welcome',
-    loadChildren: () => import('./welcome/welcome.module').then( m => m.WelcomePageModule)
-  },
-  {
-    path: 'userinfo',
-    loadChildren: () => import('./userinfo/userinfo.module').then( m => m.UserinfoPageModule)
-  },
-  {
-    path: 'chat-channel',
-    loadChildren: () => import('./chat/chat.module').then( m => m.ChatPageModule)
-  },
-  {
-    path: 'login',
-    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+    path: 'profile', 
+    component: ProfileComponent
   }
+  //,
+  // {
+  //   path: 'folder/:id',
+  //   loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
+  // }
 ];
 
 @NgModule({
-  declarations: [
-    TestComponent
-  ],
   imports: [
-    RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
+    IonicModule,//this is important
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  declarations: [WelcomeComponent,ProfileComponent]
 })
-export class AppRoutingModule {
-  
-}
+export class AppRoutingModule {}
