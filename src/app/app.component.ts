@@ -3,12 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { LoginService } from '../services/login.service';
-import { ChannelService } from '../services/channel.service';
-import { User } from 'src/models/user';
-import { Channel } from 'src/models/channel';
-import { ChannelPage } from 'src/models/channelPage';
-import { DM } from 'src/models/dm';
+import { UserService} from 'src/app/services/user.service';
+import { ChannelService} from 'src/app/services/channel.service';
+import { User } from 'src/app/models/user';
+import { Channel } from 'src/app/models/channel'
+import { DM } from 'src/app/models/dm'
 
 @Component({
   selector: 'app-root',
@@ -16,37 +15,12 @@ import { DM } from 'src/models/dm';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent implements OnInit {
-  public selectedIndex = 0;
-  public selectedChannelIndex = 0;
-  public selectedDMIndex = 0;
-  public channelPages:ChannelPage[];
-  public dmPages = [];
-
-  public currentUser: User = new User();
-  public channels: Iterable<Channel> = [];
-  public dms: Iterable<DM> = [];
-  
-
-  public appPages = [
-    {
-      title: 'Welcome',
-      url: '/welcome',
-      icon: 'paw'
-    },    
-    {
-      title: 'Profile',
-      url: '/userinfo',
-      icon: 'person'
-    }
-  ];
-
-  //public labels = ['test','test2'];
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private loginService: LoginService,
+    private userService: UserService,
     private channelService: ChannelService
   ) {
     this.initializeApp();
@@ -57,17 +31,32 @@ export class AppComponent implements OnInit {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
-    this.currentUser = this.loginService.getUser();
-    this.channels = this.channelService.getChannels();
-    this.dms = this.channelService.getDms();    
-    this.channelPages = this.channelService.mapChannelToChat();
-    this.dmPages = this.channelService.mapDMToChat();
   }
+
+
+  currentUser: User = new User();
+  currentChannels: Iterable<Channel> = [];
+  currentDms: Iterable<DM> = [];
+  
 
   ngOnInit() {
+    this.userService.login("kitty@gmail.com", "5678");
+    this.userService.getUser().subscribe( u => {
+      this.currentUser = u;
+      this.channelService.setUpChannels(u.id);
+      this.channelService.setUpDms(u.id);
+      this.channelService.getChannels().subscribe( c => {
+        this.currentChannels = c;
+      })
+      this.channelService.getDms().subscribe( c => {
+        this.currentDms = c;
+      })      
+    })
   }
 
-  clicked(channelPage:ChannelPage){
-    this.channelService.setcurrentChannel(channelPage);
+  setCurrentChat(id:number){
+      this.channelService.setCurrentChat(id);
   }
+
+
 }
