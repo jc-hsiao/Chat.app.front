@@ -7,6 +7,7 @@ import { UserService} from 'src/app/services/user.service';
 import { ChannelService} from 'src/app/services/channel.service';
 import { User } from 'src/app/models/user';
 import { Channel } from 'src/app/models/channel'
+import { DM } from 'src/app/models/dm'
 
 @Component({
   selector: 'app-root',
@@ -32,20 +33,30 @@ export class AppComponent implements OnInit {
     });
   }
 
+
   currentUser: User = new User();
   currentChannels: Iterable<Channel> = [];
+  currentDms: Iterable<DM> = [];
+  
 
   ngOnInit() {
     this.userService.login("kitty@gmail.com", "5678");
     this.userService.getUser().subscribe( u => {
       this.currentUser = u;
       this.channelService.setUpChannels(u.id);
+      this.channelService.setUpDms(u.id);
       this.channelService.getChannels().subscribe( c => {
         this.currentChannels = c;
       })
+      this.channelService.getDms().subscribe( c => {
+        this.currentDms = c;
+      })      
     })
-
-
   }
+
+  setCurrentChat(id:number){
+      this.channelService.setCurrentChat(id);
+  }
+
 
 }

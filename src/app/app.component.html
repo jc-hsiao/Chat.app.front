@@ -32,7 +32,17 @@
             </ion-menu-toggle>
           </ion-list>
           <!--channel list-->
-
+          <!--dm list-->
+          <ion-list id="dm-list">
+            <ion-list-header>Direct Message</ion-list-header>
+            <ion-menu-toggle auto-hide="false" *ngFor="let dm of currentDms; let i = index">
+              <ion-item [routerLink]="'dm/'+i">
+                <ion-icon slot="start" ios="people-outline" md="people-sharp"></ion-icon>
+                <ion-label>DM{{i}}</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          </ion-list>
+          <!--dm list-->
 
           
         

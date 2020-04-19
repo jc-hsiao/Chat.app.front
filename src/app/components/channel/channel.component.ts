@@ -19,7 +19,7 @@ export class ChannelComponent implements OnInit {
     private channelService: ChannelService,
     private userService: UserService) { }
 
-  id: number;
+  pathId: number;
   Channels: Iterable<Channel> = [];
   currentUser: User = new User();
   currentChannel: Channel = new Channel();
@@ -27,12 +27,12 @@ export class ChannelComponent implements OnInit {
   ngOnInit() {
     //get id from path
     this.route.params.subscribe(params => {
-      this.id = +params['id']; // (+) converts string 'id' to a number
+      this.pathId = +params['id']; // (+) converts string 'id' to a number
       this.userService.getUser().subscribe( u => {
         this.currentUser = u;
         this.channelService.getChannels().subscribe( c => {
           this.Channels = c;
-          this.currentChannel = this.Channels[this.id];
+          this.currentChannel = this.Channels[this.pathId];
         })      
       })
     });    

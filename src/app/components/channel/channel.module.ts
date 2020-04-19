@@ -4,7 +4,8 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 import { MsgPaneComponent } from 'src/app/components/msg-pane/msg-pane.component';
-import { ChannelComponent } from 'src/app/components/channel/channel.component'
+import { ChannelComponent } from 'src/app/components/channel/channel.component';
+import { DmComponent } from 'src/app/components/dm/dm.component';
 
 @NgModule({
   imports: [
@@ -12,7 +13,7 @@ import { ChannelComponent } from 'src/app/components/channel/channel.component'
     FormsModule,
     IonicModule,
   ],
-  declarations: [ChannelComponent,MsgPaneComponent]
+  declarations: [ChannelComponent,DmComponent,MsgPaneComponent]
 })
 export class ChannelModule {
 }

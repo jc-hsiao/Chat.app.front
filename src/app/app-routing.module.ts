@@ -4,6 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { WelcomeComponent } from 'src/app/components/welcome/welcome.component'
 import { ProfileComponent } from 'src/app/components/profile/profile.component'
 import { ChannelComponent } from 'src/app/components/channel/channel.component'
+import { DmComponent } from 'src/app/components/dm/dm.component'
 import { ChannelModule } from 'src/app/components/channel/channel.module'
 
 const routes: Routes = [
@@ -19,6 +20,10 @@ const routes: Routes = [
   {
     path: 'channel/:id',
     component: ChannelComponent
+  },
+  {
+    path: 'dm/:id',
+    component: DmComponent
   }
 ];
 

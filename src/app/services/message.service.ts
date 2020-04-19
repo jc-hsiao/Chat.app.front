@@ -14,7 +14,7 @@ export class MessageService {
   constructor(private http: HttpClient) { }
 
   setUpMsgs(channelId:number){
-    this.messages = this.http.get<Iterable<Message>>(environment.apiURL+'msg/allByChannel/' + channelId).pipe( 
+    this.messages = this.http.get<Iterable<Message>>(environment.apiURL+'msg/allByChat/' + channelId).pipe( 
       tap(_ => console.log("fetching messages for channel"+channelId))
     );
   }
