@@ -9,7 +9,7 @@ import { DM } from 'src/app/models/dm'
 @Injectable({
   providedIn: 'root'
 })
-export class ChannelService {
+export class ChatService {
 
   chatId: number = 0;
   channels: Observable<Iterable<Channel>> = new Observable<Iterable<Channel>>();

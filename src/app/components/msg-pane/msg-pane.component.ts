@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ChannelService} from 'src/app/services/channel.service';
+import { ChatService} from 'src/app/services/chat.service';
 import { UserService} from 'src/app/services/user.service';
 import { MessageService} from 'src/app/services/message.service';
 
@@ -29,7 +29,7 @@ export class MsgPaneComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private channelService: ChannelService,    
+    private chatService: ChatService,    
     private userService: UserService,
     private messageService :MessageService,
     private url:LocationStrategy) { }
@@ -40,10 +40,10 @@ export class MsgPaneComponent implements OnInit {
       this.pathId = +params['id']; // (+) converts string 'id' to a number
       this.userService.getUser().subscribe( u => {
         this.currentUser = u;
-        this.channelService.getCurrentChatid
+        this.chatService.getCurrentChatid
         console.log(this.url.path());
         if(this.url.path().includes('/channel')){
-          this.channelService.getChannels().subscribe( c => {
+          this.chatService.getChannels().subscribe( c => {
             this.channels = c;
             this.currentChannel = this.channels[this.pathId];
             this.messageService.setUpMsgs(this.currentChannel.id);
@@ -52,7 +52,7 @@ export class MsgPaneComponent implements OnInit {
             }) 
           }) 
         }else if(this.url.path().includes('/dm')){
-          this.channelService.getDms().subscribe( c => {
+          this.chatService.getDms().subscribe( c => {
             this.dms = c;
             this.currentDm = this.dms[this.pathId];
             this.messageService.setUpMsgs(this.currentDm.id);
