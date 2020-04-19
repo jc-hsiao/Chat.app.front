@@ -2,7 +2,7 @@
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
-        <ion-list id="inbox-list">
+        <ion-list id="main-list">
          <ion-list-header>Puppy Chat</ion-list-header>
           <ion-note>ZipCode Cohort6.0</ion-note>
 
@@ -19,9 +19,23 @@
           </ion-menu-toggle>
           <!--user menu-->
 
+        </ion-list>
+          
+          <!--channel list-->
+          <ion-list id="channel-list">
+            <ion-list-header>Channels</ion-list-header>
+            <ion-menu-toggle auto-hide="false" *ngFor="let chp of currentChannels; let i = index">
+              <ion-item [routerLink]="'channel/'+i">
+                <ion-icon slot="start" ios="people-outline" md="people-sharp"></ion-icon>
+                <ion-label>{{ chp.name }}</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          </ion-list>
+          <!--channel list-->
+
 
           
-        </ion-list>
+        
 
       </ion-content>
     </ion-menu>

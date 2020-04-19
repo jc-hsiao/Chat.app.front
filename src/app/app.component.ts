@@ -4,7 +4,9 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { UserService} from 'src/app/services/user.service';
-import { User } from './models/user';
+import { ChannelService} from 'src/app/services/channel.service';
+import { User } from 'src/app/models/user';
+import { Channel } from 'src/app/models/channel'
 
 @Component({
   selector: 'app-root',
@@ -17,7 +19,8 @@ export class AppComponent implements OnInit {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private userService: UserService
+    private userService: UserService,
+    private channelService: ChannelService
   ) {
     this.initializeApp();
   }
@@ -30,11 +33,19 @@ export class AppComponent implements OnInit {
   }
 
   currentUser: User = new User();
+  currentChannels: Iterable<Channel> = [];
+
   ngOnInit() {
-    this.userService.login("puppy@gmail.com", "1234");
+    this.userService.login("kitty@gmail.com", "5678");
     this.userService.getUser().subscribe( u => {
       this.currentUser = u;
+      this.channelService.setUpChannels(u.id);
+      this.channelService.getChannels().subscribe( c => {
+        this.currentChannels = c;
+      })
     })
+
+
   }
 
 }
