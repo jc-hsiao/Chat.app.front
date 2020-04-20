@@ -46,7 +46,7 @@ export class AppComponent implements OnInit {
 
   validate(){
     console.log("attempt to log in");
-    this.userService.login("kitty@gmail.com", "5678");
+    this.userService.login("puppy@gmail.com", "1234");
     this.overlayHidden = true;
     this.userService.getUser().subscribe( u => {
       this.currentUser = u;
