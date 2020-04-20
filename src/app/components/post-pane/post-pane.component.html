@@ -1,3 +1,8 @@
-<p>
-  post-pane works!
-</p>
+<ion-card>
+  <ion-input #msg
+    placeholder="ENTER YOU MESSAGE HERE" 
+    color="secondary"
+    spellcheck= "true">
+  </ion-input>
+  <ion-button color="medium" (click)="sendMsg(msg.value); msg.value=''">SEND</ion-button>
+</ion-card>

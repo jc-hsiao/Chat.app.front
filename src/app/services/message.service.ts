@@ -9,12 +9,12 @@ import { Message } from 'src/app/models/message'
   providedIn: 'root'
 })
 export class MessageService {
-  messages: Observable<Iterable<Message>> = new Observable<Iterable<Message>>();
+  messages: Observable<Message[]> = new Observable<Message[]>();
 
   constructor(private http: HttpClient) { }
 
   setUpMsgs(channelId:number){
-    this.messages = this.http.get<Iterable<Message>>(environment.apiURL+'msg/allByChat/' + channelId).pipe( 
+    this.messages = this.http.get<Message[]>(environment.apiURL+'msg/allByChat/' + channelId).pipe( 
       tap(_ => console.log("fetching messages for channel"+channelId))
     );
   }
@@ -22,4 +22,11 @@ export class MessageService {
   getMessages(){
     return this.messages;
   }
+
+  addNewMessage(userId:number, chatId:number, text:string): Observable<Message>{
+    return this.http.post<Message>(environment.apiURL+'msg/'+userId+"/"+chatId, text).pipe( 
+      tap(_ => console.log("added a new message to chat"+chatId))
+    );
+  }
+
 }

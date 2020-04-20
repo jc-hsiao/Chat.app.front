@@ -4,7 +4,7 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { UserService} from 'src/app/services/user.service';
-import { ChannelService} from 'src/app/services/channel.service';
+import { ChatService } from 'src/app/services/chat.service';
 import { User } from 'src/app/models/user';
 import { Channel } from 'src/app/models/channel'
 import { DM } from 'src/app/models/dm'
@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private userService: UserService,
-    private channelService: ChannelService
+    private chatService: ChatService
   ) {
     this.initializeApp();
   }
@@ -43,19 +43,19 @@ export class AppComponent implements OnInit {
     this.userService.login("kitty@gmail.com", "5678");
     this.userService.getUser().subscribe( u => {
       this.currentUser = u;
-      this.channelService.setUpChannels(u.id);
-      this.channelService.setUpDms(u.id);
-      this.channelService.getChannels().subscribe( c => {
+      this.chatService.setUpChannels(u.id);
+      this.chatService.setUpDms(u.id);
+      this.chatService.getChannels().subscribe( c => {
         this.currentChannels = c;
       })
-      this.channelService.getDms().subscribe( c => {
+      this.chatService.getDms().subscribe( c => {
         this.currentDms = c;
       })      
     })
   }
 
   setCurrentChat(id:number){
-      this.channelService.setCurrentChat(id);
+      this.chatService.setCurrentChat(id);
   }
 
 
