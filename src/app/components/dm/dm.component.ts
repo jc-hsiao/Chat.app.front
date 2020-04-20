@@ -3,7 +3,6 @@ import { ChatService} from 'src/app/services/chat.service';
 import { UserService} from 'src/app/services/user.service';
 
 import { User } from 'src/app/models/user';
-import { Channel } from 'src/app/models/channel';
 import { DM } from 'src/app/models/dm';
 import { ActivatedRoute } from '@angular/router';
 

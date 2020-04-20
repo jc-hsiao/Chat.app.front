@@ -2,10 +2,11 @@
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
+
         <ion-list id="main-list">
          <ion-list-header>Puppy Chat</ion-list-header>
           <ion-note>ZipCode Cohort6.0</ion-note>
-
+          
           <!--user menu-->
           <ion-menu-toggle auto-hide="false">
             <ion-item routerLink="/welcome">
@@ -18,9 +19,8 @@
             </ion-item>            
           </ion-menu-toggle>
           <!--user menu-->
-
         </ion-list>
-          
+
           <!--channel list-->
           <ion-list id="channel-list">
             <ion-list-header>Channels</ion-list-header>
@@ -37,7 +37,7 @@
             <ion-list-header>Direct Message</ion-list-header>
             <ion-menu-toggle auto-hide="false" *ngFor="let dm of currentDms; let i = index">
               <ion-item [routerLink]="'dm/'+i">
-                <ion-icon slot="start" ios="people-outline" md="people-sharp"></ion-icon>
+                <ion-icon slot="start" ios="paper-plane-outline" md="paper-plane-sharp"></ion-icon>
                 <ion-label>DM{{i}}</ion-label>
               </ion-item>
             </ion-menu-toggle>

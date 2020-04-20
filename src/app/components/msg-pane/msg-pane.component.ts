@@ -17,7 +17,7 @@ import { LocationStrategy } from '@angular/common';
 })
 export class MsgPaneComponent implements OnInit {
 
-  messages: Iterable<Message> = [];
+  messages: Message[] = [];
   currentUser: User = new User();
   pathId: number;
 
@@ -36,12 +36,14 @@ export class MsgPaneComponent implements OnInit {
 
   ngOnInit() {
     //get id from path
+    // this.messageService.getMessages().subscribe( msgs => {
+    //   this.messages = msgs;
+    // });
     this.route.params.subscribe(params => {
       this.pathId = +params['id']; // (+) converts string 'id' to a number
       this.userService.getUser().subscribe( u => {
         this.currentUser = u;
         this.chatService.getCurrentChatid
-        console.log(this.url.path());
         if(this.url.path().includes('/channel')){
           this.chatService.getChannels().subscribe( c => {
             this.channels = c;

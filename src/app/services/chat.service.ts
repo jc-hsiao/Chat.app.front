@@ -11,7 +11,7 @@ import { DM } from 'src/app/models/dm'
 })
 export class ChatService {
 
-  chatId: number = 0;
+  chatId: Observable<number> = new  Observable<number>() ;
   channels: Observable<Iterable<Channel>> = new Observable<Iterable<Channel>>();
   dms: Observable<Iterable<DM>> = new Observable<Iterable<DM>>();
 
@@ -34,7 +34,7 @@ export class ChatService {
     return this.dms;
   }
   setCurrentChat(id:number){
-    this.chatId = id;
+    this.chatId = of(id);
   }
   getCurrentChatid(){
     return this.chatId;
