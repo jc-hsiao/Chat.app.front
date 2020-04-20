@@ -1,4 +1,9 @@
 <ion-app>
+
+  <div class="my-overlay" padding [hidden]="overlayHidden">
+    <ion-button full (click)="validate()">Click me</ion-button>
+  </div>
+
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
@@ -43,9 +48,6 @@
             </ion-menu-toggle>
           </ion-list>
           <!--dm list-->
-
-          
-        
 
       </ion-content>
     </ion-menu>
