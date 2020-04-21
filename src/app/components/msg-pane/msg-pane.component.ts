@@ -51,6 +51,9 @@ export class MsgPaneComponent implements OnInit {
             this.messageService.setUpMsgs(this.currentChannel.id);
             this.messageService.getMessages().subscribe( m => {
               this.messages = m;
+              for(var i=0 ;i<this.messages.length;i++){
+                this.messages[i].timeStamp = this.messages[i].timeStamp.replace('T','  / ');
+              }
             }) 
           }) 
         }else if(this.url.path().includes('/dm')){
@@ -60,7 +63,10 @@ export class MsgPaneComponent implements OnInit {
             this.messageService.setUpMsgs(this.currentDm.id);
             this.messageService.getMessages().subscribe( m => {
               this.messages = m;
-            }) 
+              for(var i=0 ;i<this.messages.length;i++){
+                this.messages[i].timeStamp = this.messages[i].timeStamp.replace('T',' ');
+              }              
+            })             
           }) 
         }
       })

@@ -9,7 +9,7 @@ import { ChannelModule } from 'src/app/components/channel/channel.module'
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/welcome', pathMatch: 'full' },
+  { path: '', redirectTo: 'welcome', pathMatch: 'full' },
   {
     path: 'welcome', 
     component: WelcomeComponent
