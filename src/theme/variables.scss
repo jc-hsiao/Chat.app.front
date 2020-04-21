@@ -5,6 +5,7 @@
 .md ion-toolbar, .ios ion-toolbar{
   --background: #7b3f22;
   color: #fff;
+  font-family: Arial Rounded MT Bold,Helvetica Rounded,Arial,sans-serif; 
  }
 .md ion-menu-button, .ios ion-menu-button{
   color: #f9ba45;
@@ -168,6 +169,7 @@
    */
 
   .ios body {
+
     --ion-background-color: #000000;
     --ion-background-color-rgb: 0,0,0;
 
