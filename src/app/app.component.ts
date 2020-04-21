@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { ModalController, NavParams } from '@ionic/angular';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -9,6 +9,7 @@ import { User } from 'src/app/models/user';
 import { Channel } from 'src/app/models/channel'
 import { DM } from 'src/app/models/dm'
 
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -16,7 +17,9 @@ import { DM } from 'src/app/models/dm'
 })
 export class AppComponent implements OnInit {
 
+  overlayHidden: boolean = false;
   constructor(
+    public modalCtrl: ModalController,
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
@@ -39,8 +42,12 @@ export class AppComponent implements OnInit {
   currentDms: Iterable<DM> = [];
   
 
-  ngOnInit() {
-    this.userService.login("kitty@gmail.com", "5678");
+  ngOnInit() {}
+
+  validate(){
+    console.log("attempt to log in");
+    this.userService.login("puppy@gmail.com", "1234");
+    this.overlayHidden = true;
     this.userService.getUser().subscribe( u => {
       this.currentUser = u;
       this.chatService.setUpChannels(u.id);
@@ -54,9 +61,6 @@ export class AppComponent implements OnInit {
     })
   }
 
-  setCurrentChat(id:number){
-      this.chatService.setCurrentChat(id);
-  }
 
 
 }

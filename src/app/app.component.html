@@ -1,28 +1,41 @@
 <ion-app>
+
+  <div class="my-overlay" padding [hidden]="overlayHidden">
+      <div class="login">
+        <div class="container">
+          <ion-icon name="paw" class="logo"></ion-icon>
+          <h2>PUPPY CHAT</h2>
+          <div class="box">
+            <input type="text" placeholder="username">
+            <input type="password" placeholder="password">
+            <ion-button class="btn" (click)="validate()" color="dark" >Login</ion-button>
+            <ion-button class="btn" (click)="validate()" color="dark" >Sign-Up</ion-button>
+          </div>
+        </div>
+      </div>      
+  </div>
+
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
 
-        <ion-list id="main-list">
+        <ion-list id="main-list" lines="none">
          <ion-list-header>Puppy Chat</ion-list-header>
-          <ion-note>ZipCode Cohort6.0</ion-note>
-          
+          <ion-note>ZipCode Cohort 6.0</ion-note>
           <!--user menu-->
-          <ion-menu-toggle auto-hide="false">
-            <ion-item routerLink="/welcome">
+            <ion-item routerLink="/welcome" no-lines>
               <ion-icon slot="start" [ios]=" 'paw-outline'" [md]=" 'paw-sharp'"></ion-icon>
               <ion-label>Welcome</ion-label>
             </ion-item>
-            <ion-item routerLink="/profile">
+            <ion-item routerLink="/profile" no-lines>
               <ion-icon slot="start" [ios]=" 'person-outline'" [md]=" 'person-sharp'"></ion-icon>
               <ion-label>Profile</ion-label>
             </ion-item>            
-          </ion-menu-toggle>
           <!--user menu-->
         </ion-list>
 
           <!--channel list-->
-          <ion-list id="channel-list">
+          <ion-list id="channel-list" lines="none">
             <ion-list-header>Channels</ion-list-header>
             <ion-menu-toggle auto-hide="false" *ngFor="let chp of currentChannels; let i = index">
               <ion-item [routerLink]="'channel/'+i">
@@ -33,8 +46,8 @@
           </ion-list>
           <!--channel list-->
           <!--dm list-->
-          <ion-list id="dm-list">
-            <ion-list-header>Direct Message</ion-list-header>
+          <ion-list id="dm-list" lines="none">
+            <ion-list-header>Direct Messages</ion-list-header>
             <ion-menu-toggle auto-hide="false" *ngFor="let dm of currentDms; let i = index">
               <ion-item [routerLink]="'dm/'+i">
                 <ion-icon slot="start" ios="paper-plane-outline" md="paper-plane-sharp"></ion-icon>
@@ -43,9 +56,6 @@
             </ion-menu-toggle>
           </ion-list>
           <!--dm list-->
-
-          
-        
 
       </ion-content>
     </ion-menu>

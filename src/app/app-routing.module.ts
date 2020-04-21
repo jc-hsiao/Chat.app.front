@@ -7,6 +7,7 @@ import { ChannelComponent } from 'src/app/components/channel/channel.component'
 import { DmComponent } from 'src/app/components/dm/dm.component'
 import { ChannelModule } from 'src/app/components/channel/channel.module'
 
+
 const routes: Routes = [
   { path: '', redirectTo: '/welcome', pathMatch: 'full' },
   {
