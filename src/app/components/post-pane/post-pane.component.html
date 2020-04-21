@@ -1,8 +1,11 @@
-<ion-card>
-  <ion-input #msg
-    placeholder="ENTER YOU MESSAGE HERE" 
-    color="secondary"
-    spellcheck= "true">
-  </ion-input>
-  <ion-button color="medium" (click)="sendMsg(msg.value); msg.value=''">SEND</ion-button>
-</ion-card>
+<div id="post-pane">
+  <ion-card>
+    <ion-item lines="none">
+      <ion-textarea #msg
+        placeholder="ENTER YOU MESSAGE HERE"
+        spellcheck= "true">
+      </ion-textarea>
+      <ion-button  class="send" size="undefined" (click)="sendMsg(msg.value); msg.value=''">SEND</ion-button>
+    </ion-item>
+  </ion-card>
+</div>
