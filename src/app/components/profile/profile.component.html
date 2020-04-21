@@ -8,15 +8,12 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-          ion-col
-        </ion-col>
-        <ion-col>
-          UserName: {{currentUser.displayName}}<br>
-          Email: {{currentUser.email}}  
-        </ion-col>
-      </ion-row>
-    </ion-grid>  
+  <div class="profile">
+    <ion-icon name="person" class="profileL">
+    </ion-icon>
+    <div class="profileR">
+      <span>Name:</span> {{currentUser.displayName}}<br>
+      <span>Email:</span> {{currentUser.email}}
+    </div>
+  </div>
 </ion-content>

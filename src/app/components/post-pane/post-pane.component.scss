@@ -22,7 +22,7 @@ ion-button{
     --padding-end:20px;
     margin-bottom:1.5rem;
     --background:#7b3f22;
-    --border-radius:0.7rem;
+    --border-radius:2rem;
 }
 .send:active{
     --box-shadow: none;
@@ -38,7 +38,7 @@ ion-textarea{
     padding-right: 0.6rem;
     --color:#222;
     --background: #ecf2f4;
-    border-radius: 0.7rem;
+    border-radius: 0.2rem;
     border: 1px solid #bbb;
     box-shadow: inset 0px 0px 10px 3px rgba(0,0,0,0.1);
 
