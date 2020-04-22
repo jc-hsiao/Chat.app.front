@@ -20,7 +20,7 @@ export class ChannelComponent implements OnInit {
     private userService: UserService) { }
 
   pathId: number;
-  Channels: Iterable<Channel> = [];
+  Channels: Channel[] = [];
   currentUser: User = new User();
   currentChannel: Channel = new Channel();
 

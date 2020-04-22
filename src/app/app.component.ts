@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef  } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -16,7 +16,13 @@ import { DM } from 'src/app/models/dm'
 })
 export class AppComponent implements OnInit {
 
-  overlayHidden: boolean = false;
+  loginOverlayHidden: boolean = false;
+  addChannelOverlayHidden:boolean = true;
+  addDMOverlayHidden: boolean = true;
+
+  arr = ["aa","bb","ccc"]
+  selectedLevel:number = null;
+
   constructor(
     public modalCtrl: ModalController,
     private platform: Platform,
@@ -37,31 +43,37 @@ export class AppComponent implements OnInit {
   }
 
 
+  userList: User[] = [];
   currentUser: User = new User();
-  currentChannels: Iterable<Channel> = [];
-  currentDms: Iterable<DM> = [];
+  currentChannels: Channel[] = [];
+  currentDms: DM[] = [];
   err: string = "";
   err2: string = "";
+
 
   ngOnInit() {
   }
 
-
   validateLogin(email:string, pass:string){
+    email = "puppy@gmail.com";
+    pass = "1234";
+
     if(email == "" || pass== ""){
       this.err = "Some fields are empty!";
       return 0;
     }
     console.log("attempt to log in with " +email+" and "+pass);
-    let spPane = this.el.nativeElement.querySelector("ion-split-pane");
-    let overlay = this.el.nativeElement.querySelector(".my-overlay");    
     this.userService.login(email, pass);
+    this.setup();
+  }
+
+  setup(){
     this.userService.getUser().subscribe( u => {    
       if(u==null){
         this.err = "Oops! Something is wrong with your credentials";
       }else{
         this.currentUser = u;
-        this.overlayHidden = true;
+        this.loginOverlayHidden = true;
         this.chatService.setUpChannels(u.id);
         this.chatService.setUpDms(u.id);
         this.chatService.getChannels().subscribe( c => {
@@ -69,15 +81,34 @@ export class AppComponent implements OnInit {
         })
         this.chatService.getDms().subscribe( c => {
           this.currentDms = c;
-        })     
-        if(spPane.classList.contains('blur')){
-          spPane.classList.remove('blur'); 
-        }
+        })
+        this.userService.grabAllUsers().subscribe( all =>{
+          this.userList = all;
+          //have to remove current user from this list
+          this.removeCurrentUserFromArray(all);
+        })
+
+        this.toggleBlur();
+        let overlay = this.el.nativeElement.querySelector(".overlay");
         if(!overlay.classList.contains('bye')){
           overlay.classList.add('bye')
         }
+        this.clearErr();
       }
     })
+  }
+
+  removeCurrentUserFromArray(arr: User[]){
+    var temp;
+    var index;
+    for( var u of arr ){
+      if(u.id == this.currentUser.id ){
+        temp = u;
+        index = arr.indexOf(temp);
+      }            
+    }
+    this.userList.splice(index,1);
+
   }
 
 
@@ -91,6 +122,7 @@ export class AppComponent implements OnInit {
       inner.classList.remove('inner2'); 
       bt2.classList.remove("nope");
     }
+    this.clearErr();
   }
 
   validateSignUp(email:string, pass:string, name:string){
@@ -107,10 +139,57 @@ export class AppComponent implements OnInit {
     });
   }
 
+  popUpNewChannel(){
+    this.toggleBlur();
+    this.addChannelOverlayHidden = false;
+  }
+
+  popUpNewDM(){
+    this.toggleBlur();
+    this.addDMOverlayHidden = false;
+  }
+
+  createNewChannel(name:string){
+    if(name.length == 0){
+      this.err = "You can't give it an empty name!";
+    }else{
+      this.chatService.createChannel(this.currentUser.id,name).subscribe( ch => this.currentChannels.push(ch));
+      this.closePopUp();
+    }
+  }
+
+  createNewDM(){
+    if(this.selectedLevel == null){
+      this.err = "You didn't select anyone!";
+    }else{
+      var targetUserid = this.selectedLevel;
+      this.userService.grabUserById(targetUserid).subscribe( u => {
+        this.chatService.createDM(this.currentUser.id, u).subscribe( d => this.currentDms.push(d));
+      });
+      this.closePopUp();
+    }
+  }
 
   clearErr(){
     this.err = "";
     this.err2 = "";
+  }
+
+  closePopUp(){
+    this.loginOverlayHidden = true;
+    this.addChannelOverlayHidden = true;
+    this.addDMOverlayHidden = true;
+    this.toggleBlur();
+    this.clearErr();
+  }
+
+  toggleBlur(){
+    let spPane = this.el.nativeElement.querySelector("ion-split-pane");        
+    if(spPane.classList.contains('blur')){
+      spPane.classList.remove('blur'); 
+    }else if(!spPane.classList.contains('blur')){
+      spPane.classList.add('blur'); 
+    }
   }
 
 }
