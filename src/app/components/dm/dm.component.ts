@@ -21,7 +21,7 @@ export class DmComponent implements OnInit {
 
   path: string = "dm";
   pathId: number;
-  dms: Iterable<DM> = [];
+  dms: DM[] = [];
   currentUser: User = new User();
   currentDm: DM = new DM();
   ngOnInit() {
@@ -31,7 +31,7 @@ export class DmComponent implements OnInit {
       this.pathId = +params['id']; // (+) converts string 'id' to a number
       this.userService.getUser().subscribe( u => {
         this.currentUser = u;
-        this.chatService.getChannels().subscribe( c => {
+        this.chatService.getDms().subscribe( c => {
           this.dms = c;
           this.currentDm = this.dms[this.pathId];
         })      
