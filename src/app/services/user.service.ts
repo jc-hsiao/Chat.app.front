@@ -35,6 +35,11 @@ export class UserService {
     );    
   }
 
+  grabAllUsers(){
+    return this.http.get<User[]>(environment.apiURL+'user/all').pipe( 
+      tap(_ => console.log("fetching user list..."))
+    );
+  }
 
   getUser(){
     return this.user;

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable,of } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap,map } from 'rxjs/operators';
 import { Channel } from 'src/app/models/channel'
 import { DM } from 'src/app/models/dm'
 
@@ -24,9 +24,34 @@ export class ChatService {
   }
   setUpDms(userId:number){
     this.dms = this.http.get<Iterable<DM>>(environment.apiURL+'dm/allByUser/' + userId).pipe( 
-      tap(_ => console.log("fetching dms..."))
+      tap(_ => console.log("fetching dms...")),
+      map(ds => { 
+        for(let d of ds){
+          var str= ""
+           for(let u of d.members){
+             if(u.id != userId){
+               str += u.displayName + ", "
+             }
+           }
+           str = str.substring(0, str.length-2);
+           d.name = str;
+        }
+        return ds;
+      })
     );
   }
+
+  createChannel(id:number,name:string){
+    //@TODO 
+  }
+
+  createDM(currentUserId:number, targetUserId:number){
+    //@TODO 
+
+    console.log(currentUserId+" and "+targetUserId);
+  }
+
+
   getChannels(){
     return this.channels;
   }

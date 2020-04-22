@@ -2,8 +2,9 @@
     <ion-item lines="none">
       <ion-textarea #msg
         placeholder="ENTER YOU MESSAGE HERE"
-        spellcheck= "true">
+        spellcheck= "true"
+        (keyup.enter)="sendMsg(msg.value); msg.value=''">
       </ion-textarea>
-      <ion-button  class="send" size="undefined" (click)="sendMsg(msg.value); msg.value=''">SEND</ion-button>
+      <!-- <ion-button  class="send" size="undefined" (click)="sendMsg(msg.value); msg.value=''">SEND</ion-button> -->
     </ion-item>
 </div>
