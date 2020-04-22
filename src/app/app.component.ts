@@ -19,8 +19,6 @@ export class AppComponent implements OnInit {
   loginOverlayHidden: boolean = false;
   addChannelOverlayHidden:boolean = true;
   addDMOverlayHidden: boolean = true;
-
-  arr = ["aa","bb","ccc"]
   selectedLevel:number = null;
 
   constructor(
@@ -55,8 +53,8 @@ export class AppComponent implements OnInit {
   }
 
   validateLogin(email:string, pass:string){
-    email = "puppy@gmail.com";
-    pass = "1234";
+    // email = "puppy@gmail.com";
+    // pass = "1234";
 
     if(email == "" || pass== ""){
       this.err = "Some fields are empty!";
