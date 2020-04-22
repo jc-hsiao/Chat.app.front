@@ -44,7 +44,13 @@ export class UserService {
   getUser(){
     return this.user;
   }
-  
+
+  grabUserById(id){
+    return this.http.get<User>(environment.apiURL+'user/'+id).pipe( 
+      tap(_ => console.log("fetching user list..."))
+    );
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {  
       console.error(error);   

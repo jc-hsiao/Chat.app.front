@@ -5,6 +5,7 @@ import { Observable,of } from 'rxjs';
 import { tap,map } from 'rxjs/operators';
 import { Channel } from 'src/app/models/channel'
 import { DM } from 'src/app/models/dm'
+import { User } from 'src/app/models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -12,45 +13,57 @@ import { DM } from 'src/app/models/dm'
 export class ChatService {
 
   chatId: Observable<number> = new  Observable<number>() ;
-  channels: Observable<Iterable<Channel>> = new Observable<Iterable<Channel>>();
-  dms: Observable<Iterable<DM>> = new Observable<Iterable<DM>>();
+  channels: Observable<Channel[]> = new Observable<Channel[]>();
+  dms: Observable<DM[]> = new Observable<DM[]>();
 
   constructor(private http: HttpClient) { }
 
   setUpChannels(userId:number){
-    this.channels = this.http.get<Iterable<Channel>>(environment.apiURL+'channel/all/m/' + userId).pipe( 
+    this.channels = this.http.get<Channel[]>(environment.apiURL+'channel/all/m/' + userId).pipe( 
       tap(_ => console.log("fetching channels..."))
     );
   }
   setUpDms(userId:number){
-    this.dms = this.http.get<Iterable<DM>>(environment.apiURL+'dm/allByUser/' + userId).pipe( 
+    this.dms = this.http.get<DM[]>(environment.apiURL+'dm/allByUser/' + userId).pipe( 
       tap(_ => console.log("fetching dms...")),
       map(ds => { 
-        for(let d of ds){
-          var str= ""
-           for(let u of d.members){
-             if(u.id != userId){
-               str += u.displayName + ", "
-             }
-           }
-           str = str.substring(0, str.length-2);
-           d.name = str;
-        }
-        return ds;
+        return this.giveDmName(ds,userId);
       })
     );
   }
 
-  createChannel(id:number,name:string){
-    //@TODO 
+  //dive dm a name given a dm list and a current user id
+  giveDmName(ds,userId){
+    for(let d of ds){
+      var str= ""
+       for(let u of d.members){
+         if(u.id != userId){
+           str += u.displayName + ", "
+         }
+       }
+       str = str.substring(0, str.length-2);
+       d.name = str;
+    }
+    return ds;    
   }
 
-  createDM(currentUserId:number, targetUserId:number){
-    //@TODO 
 
-    console.log(currentUserId+" and "+targetUserId);
+
+  createChannel(userId:number,name:string){
+    return this.http.post<Channel>(environment.apiURL+'channel/' + userId,name).pipe( 
+      tap(_ => console.log("sned new channel data to server"))
+    );
   }
 
+  createDM(currentUserId:number, targetUser:User){
+    var temp = new DM();
+    return this.http.post<DM>(environment.apiURL+'dm/'+currentUserId+"/"+targetUser.id, temp).pipe( 
+      tap(_ => console.log("sned new dm data to server")),
+      map(d => { 
+        d.name = targetUser.displayName;
+        return d;
+      })
+    );  }
 
   getChannels(){
     return this.channels;

@@ -45,8 +45,8 @@ export class AppComponent implements OnInit {
 
   userList: User[] = [];
   currentUser: User = new User();
-  currentChannels: Iterable<Channel> = [];
-  currentDms: Iterable<DM> = [];
+  currentChannels: Channel[] = [];
+  currentDms: DM[] = [];
   err: string = "";
   err2: string = "";
 
@@ -64,6 +64,10 @@ export class AppComponent implements OnInit {
     }
     console.log("attempt to log in with " +email+" and "+pass);
     this.userService.login(email, pass);
+    this.setup();
+  }
+
+  setup(){
     this.userService.getUser().subscribe( u => {    
       if(u==null){
         this.err = "Oops! Something is wrong with your credentials";
@@ -82,7 +86,6 @@ export class AppComponent implements OnInit {
           this.userList = all;
           //have to remove current user from this list
           this.removeCurrentUserFromArray(all);
-
         })
 
         this.toggleBlur();
@@ -150,7 +153,7 @@ export class AppComponent implements OnInit {
     if(name.length == 0){
       this.err = "You can't give it an empty name!";
     }else{
-      this.chatService.createChannel(this.currentUser.id,name);
+      this.chatService.createChannel(this.currentUser.id,name).subscribe( ch => this.currentChannels.push(ch));
       this.closePopUp();
     }
   }
@@ -159,7 +162,10 @@ export class AppComponent implements OnInit {
     if(this.selectedLevel == null){
       this.err = "You didn't select anyone!";
     }else{
-      this.chatService.createDM(this.currentUser.id,this.selectedLevel);
+      var targetUserid = this.selectedLevel;
+      this.userService.grabUserById(targetUserid).subscribe( u => {
+        this.chatService.createDM(this.currentUser.id, u).subscribe( d => this.currentDms.push(d));
+      });
       this.closePopUp();
     }
   }
