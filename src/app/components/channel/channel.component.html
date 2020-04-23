@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content id="my" >
-  <app-msg-pane></app-msg-pane>
+<ion-content #content>
+  <app-msg-pane (childEvent)="test($event)" ></app-msg-pane>
   <app-post-pane></app-post-pane>
 </ion-content>
