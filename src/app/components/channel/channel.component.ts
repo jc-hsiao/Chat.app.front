@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ChannelService} from 'src/app/services/channel.service';
+import { Component, OnInit, AfterViewChecked, ElementRef, ViewChild,  } from '@angular/core';
+import { ChatService} from 'src/app/services/chat.service';
 import { UserService} from 'src/app/services/user.service';
 
 import { User } from 'src/app/models/user';
@@ -14,28 +14,32 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ChannelComponent implements OnInit {
 
+  //@ViewChild('scroll',{static: true}) private scrollVar;
+
+
   constructor(
     private route: ActivatedRoute,
-    private channelService: ChannelService,
-    private userService: UserService) { }
+    private chatService: ChatService,
+    private userService: UserService,
+    private el: ElementRef) { }
 
   pathId: number;
-  Channels: Iterable<Channel> = [];
+  Channels: Channel[] = [];
   currentUser: User = new User();
   currentChannel: Channel = new Channel();
-
   ngOnInit() {
-    //get id from path
-    this.route.params.subscribe(params => {
-      this.pathId = +params['id']; // (+) converts string 'id' to a number
-      this.userService.getUser().subscribe( u => {
-        this.currentUser = u;
-        this.channelService.getChannels().subscribe( c => {
-          this.Channels = c;
-          this.currentChannel = this.Channels[this.pathId];
-        })      
-      })
-    });    
+        //get id from path        
+        this.route.params.subscribe(params => {
+          this.pathId = +params['id']; // (+) converts string 'id' to a number
+          this.userService.getUser().subscribe( u => {
+            this.currentUser = u;
+            this.chatService.getChannels().subscribe( c => {
+              this.Channels = c;
+              this.currentChannel = this.Channels[this.pathId];
+            })      
+          })
+        });
   }
+
 
 }

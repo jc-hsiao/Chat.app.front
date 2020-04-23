@@ -1,0 +1,38 @@
+#post-pane{
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+}
+
+ion-item{
+    --background:none;
+    box-shadow: none;
+}
+
+ion-button{
+    --padding-top:27px;
+    --padding-bottom:27px;
+    --padding-start:20px;
+    --padding-end:20px;
+    margin-bottom:1.5rem;
+    --background:#7b3f22;
+    --border-radius:2rem;
+}
+.send:active{
+    --box-shadow: none;
+}
+
+::placeholder{
+    color:#aaa !important;
+}
+ion-textarea{
+    margin-bottom: 0.8rem;
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
+    --color:#222;
+    --background: #ecf2f4;
+    border-radius: 0.2rem;
+    border: 1px solid #bbb;
+    box-shadow: inset 0px 0px 10px 3px rgba(0,0,0,0.1);
+
+}

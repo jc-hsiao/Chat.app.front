@@ -3,13 +3,17 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>@{{currentUser.displayName}}'s Profile</ion-title>
+    <ion-title>{{currentUser.displayName}}'s Profile</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div id="container">
-    {{currentUser.displayName}}<br>
-    {{currentUser.email}}    
+  <div class="profile">
+    <ion-icon name="person" class="profileL">
+    </ion-icon>
+    <div class="profileR">
+      <span>Name:</span> {{currentUser.displayName}}<br>
+      <span>Email:</span> {{currentUser.email}}
+    </div>
   </div>
 </ion-content>

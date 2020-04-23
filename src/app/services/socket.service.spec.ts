@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ChannelService } from './channel.service';
+import { SocketService } from './socket.service';
 
-describe('ChannelService', () => {
+describe('SocketService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: ChannelService = TestBed.get(ChannelService);
+    const service: SocketService = TestBed.get(SocketService);
     expect(service).toBeTruthy();
   });
 });
