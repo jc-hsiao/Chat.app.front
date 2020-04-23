@@ -10,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import { LocationStrategy } from '@angular/common';
 
 import { MessageService} from 'src/app/services/message.service';
+import { SocketService } from 'src/app/services/socket.service'
 
 @Component({
   selector: 'app-post-pane',
@@ -22,10 +23,9 @@ export class PostPaneComponent implements OnInit {
     private route: ActivatedRoute,
     private chatService: ChatService,    
     private userService: UserService,
-    private messageService :MessageService,
+    private socketService: SocketService,
     private url:LocationStrategy) { }
 
-    messages: Message[] = [];
     currentUser: User = new User();
     pathId: number;
   
@@ -62,11 +62,13 @@ export class PostPaneComponent implements OnInit {
   }
 
   sendMsg(msg:string){
-    if(msg.length != 0){
+    if(msg.length != 0 && msg != "\n"){
       console.log(this.currentUser.displayName+" says "+msg+" in chat"+this.chatId);
-      this.messageService.addNewMessage(this.currentUser.id,this.chatId,msg).subscribe(msg => {
-        this.messages.push(msg);
-      });
+      // this.messageService.addNewMessage(this.currentUser.id,this.chatId,msg).subscribe(msg => {
+      //   this.messages.push(msg);
+      // });
+      //this.socketService.sendMessage(this.currentUser.id, this.chatId, msg);
+      this.socketService.sendMessage(this.currentUser.id, this.chatId, msg);
     }
   }
 

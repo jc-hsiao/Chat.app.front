@@ -78,6 +78,21 @@ export class ChatService {
     return this.chatId;
   }
 
+  e;
+  
+  setScrollEle(element){
+    this.e = element;   
+    console.log("got "+ element);
+    console.log("height "+ element.scrollHeight);
 
+  }
+
+  // pleaseScroll(){
+  //   console.log("huh?"+ JSON.stringify(this.scroll));
+  //   this.chatService.setScrollEle(this.scroll);
+
+  //   console.log(this.element.scrollTop+"!!!!!!!!!!"+this.element.scrollHeight);
+  //   this.element.scrollTop = this.element.scrollHeight;     
+  // }
 
 }

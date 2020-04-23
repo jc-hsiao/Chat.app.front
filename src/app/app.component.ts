@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { ModalController, NavParams } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -53,8 +53,8 @@ export class AppComponent implements OnInit {
   }
 
   validateLogin(email:string, pass:string){
-    // email = "puppy@gmail.com";
-    // pass = "1234";
+    email = "a";
+    pass = "a";
 
     if(email == "" || pass== ""){
       this.err = "Some fields are empty!";
