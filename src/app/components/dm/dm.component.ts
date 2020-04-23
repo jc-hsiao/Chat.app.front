@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChatService} from 'src/app/services/chat.service';
 import { UserService} from 'src/app/services/user.service';
 
@@ -12,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./dm.component.scss'],
 })
 export class DmComponent implements OnInit {
+  @ViewChild('content',{static:true}) private content: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -38,5 +39,12 @@ export class DmComponent implements OnInit {
       })
     });        
   }
-
+  
+  scrollToBottomOnInit() {
+    this.content.scrollToBottom(100);
+  }  
+  test(msg){
+    this.scrollToBottomOnInit();
+    console.log(msg);
+  }
 }

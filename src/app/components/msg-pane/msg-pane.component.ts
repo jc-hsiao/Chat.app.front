@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef,Output, EventEmitter  } from '@angular/core';
 import { ChatService} from 'src/app/services/chat.service';
 import { UserService} from 'src/app/services/user.service';
 import { MessageService} from 'src/app/services/message.service';
@@ -28,7 +28,6 @@ export class MsgPaneComponent implements OnInit {
   currentChannel: Channel = new Channel();
   currentDm: DM = new DM();
   chatId:number;
-  ele:ElementRef;
   
 
   constructor(
@@ -37,8 +36,7 @@ export class MsgPaneComponent implements OnInit {
     private userService: UserService,
     private messageService :MessageService,
     private socketService: SocketService,
-    private url:LocationStrategy,
-    private el: ElementRef) {
+    private url:LocationStrategy) {
     }
 
   ngOnInit() {
@@ -57,6 +55,7 @@ export class MsgPaneComponent implements OnInit {
             this.messageService.getMessages().subscribe( m => {
               this.messages = m;
               this.onUpdate(); 
+              this.test();
               for(var i=0 ;i<this.messages.length;i++){
                 this.messages[i].timeStamp = this.messages[i].timeStamp.replace('T','  / ');
               }
@@ -71,6 +70,7 @@ export class MsgPaneComponent implements OnInit {
             this.messageService.getMessages().subscribe( m => {
               this.messages = m;
               this.onUpdate(); 
+              this.test();
               for(var i=0 ;i<this.messages.length;i++){
                 this.messages[i].timeStamp = this.messages[i].timeStamp.replace('T',' ');
               }             
@@ -78,13 +78,9 @@ export class MsgPaneComponent implements OnInit {
           }) 
         }
       })
-      //this.ele = this.el.nativeElement.querySelector("#scroll");
-      let sc = this.el.nativeElement.querySelector("#my");   
-      this.pleaseScroll(sc);
     });
   }
 
-  //setup to listen
   onUpdate(){
     let client = this.socketService.initializeWebSocketConnection();
     this.socketService.getStompClient();
@@ -93,22 +89,18 @@ export class MsgPaneComponent implements OnInit {
         var m = new Message;
         m = JSON.parse(message.body);
         this.messages.push(m);
-        let sc = this.el.nativeElement.querySelector("#my");  
-        this.pleaseScroll(sc);
+        this.test();
       });
     });
-    //console.log(client);
+  }
+  
+  @Output() childEvent = new EventEmitter();
+  test(){
+      this.childEvent.emit('!!!!!!!!SCORE TO BOTTOM!!!!!!!!');
   }
 
   deleteMsgById(id){
     this.messageService.deleteMsg(id).subscribe();
-  }
-
-  pleaseScroll(element){
-    if(element != null){
-      console.log(element.scrollTop+"!!!!!!!!!!"+element.scrollHeight);
-      element.scrollTop = element.scrollHeight;     
-    }
   }
 
 }
