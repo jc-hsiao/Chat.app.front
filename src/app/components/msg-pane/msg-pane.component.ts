@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { ChatService} from 'src/app/services/chat.service';
 import { UserService} from 'src/app/services/user.service';
 import { MessageService} from 'src/app/services/message.service';
+import { SocketService} from 'src/app/services/socket.service';
 
 import { User } from 'src/app/models/user';
 import { Channel } from 'src/app/models/channel';
@@ -17,7 +18,7 @@ import { LocationStrategy } from '@angular/common';
 })
 export class MsgPaneComponent implements OnInit {
 
-  messages: Message[] = [];
+  messages: Message[];
   currentUser: User = new User();
   pathId: number;
 
@@ -26,19 +27,22 @@ export class MsgPaneComponent implements OnInit {
   
   currentChannel: Channel = new Channel();
   currentDm: DM = new DM();
+  chatId:number;
+  ele:ElementRef;
+  
 
   constructor(
     private route: ActivatedRoute,
     private chatService: ChatService,    
     private userService: UserService,
     private messageService :MessageService,
-    private url:LocationStrategy) { }
+    private socketService: SocketService,
+    private url:LocationStrategy,
+    private el: ElementRef) {
+    }
 
   ngOnInit() {
     //get id from path
-    // this.messageService.getMessages().subscribe( msgs => {
-    //   this.messages = msgs;
-    // });
     this.route.params.subscribe(params => {
       this.pathId = +params['id']; // (+) converts string 'id' to a number
       this.userService.getUser().subscribe( u => {
@@ -48,29 +52,63 @@ export class MsgPaneComponent implements OnInit {
           this.chatService.getChannels().subscribe( c => {
             this.channels = c;
             this.currentChannel = this.channels[this.pathId];
+            this.chatId = this.currentChannel.id;
             this.messageService.setUpMsgs(this.currentChannel.id);
             this.messageService.getMessages().subscribe( m => {
               this.messages = m;
+              this.onUpdate(); 
               for(var i=0 ;i<this.messages.length;i++){
                 this.messages[i].timeStamp = this.messages[i].timeStamp.replace('T','  / ');
               }
             }) 
           }) 
-        }else if(this.url.path().includes('/dm')){
+        }else if(this.url.path().includes('/dm')){ 
           this.chatService.getDms().subscribe( c => {
             this.dms = c;
             this.currentDm = this.dms[this.pathId];
+            this.chatId = this.currentDm.id;
             this.messageService.setUpMsgs(this.currentDm.id);
             this.messageService.getMessages().subscribe( m => {
               this.messages = m;
+              this.onUpdate(); 
               for(var i=0 ;i<this.messages.length;i++){
                 this.messages[i].timeStamp = this.messages[i].timeStamp.replace('T',' ');
-              }              
+              }             
             })             
           }) 
         }
       })
-    });    
+      //this.ele = this.el.nativeElement.querySelector("#scroll");
+      let sc = this.el.nativeElement.querySelector("#my");   
+      this.pleaseScroll(sc);
+    });
+  }
+
+  //setup to listen
+  onUpdate(){
+    let client = this.socketService.initializeWebSocketConnection();
+    this.socketService.getStompClient();
+    client.connect({}, frame => {
+      client.subscribe("/pool/"+this.chatId, (message) => { 
+        var m = new Message;
+        m = JSON.parse(message.body);
+        this.messages.push(m);
+        let sc = this.el.nativeElement.querySelector("#my");  
+        this.pleaseScroll(sc);
+      });
+    });
+    //console.log(client);
+  }
+
+  deleteMsgById(id){
+    this.messageService.deleteMsg(id).subscribe();
+  }
+
+  pleaseScroll(element){
+    if(element != null){
+      console.log(element.scrollTop+"!!!!!!!!!!"+element.scrollHeight);
+      element.scrollTop = element.scrollHeight;     
+    }
   }
 
 }

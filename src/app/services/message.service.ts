@@ -25,7 +25,13 @@ export class MessageService {
 
   addNewMessage(userId:number, chatId:number, text:string): Observable<Message>{
     return this.http.post<Message>(environment.apiURL+'msg/'+userId+"/"+chatId, text).pipe( 
-      tap(_ => console.log("added a new message to chat"+chatId))
+      tap(_ => console.log("added a new message to chat"+chatId)),
+    );
+  }
+
+  deleteMsg(msgId:number){
+    return this.http.delete<Message>(environment.apiURL+'msg/' + msgId).pipe( 
+      tap(_ => console.log("deleting mesage with id: "+msgId+"..."))
     );
   }
 
