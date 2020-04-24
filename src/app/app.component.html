@@ -22,7 +22,7 @@
               <input type="password" placeholder="password" #regpass>
               <input type="text" placeholder="display name" #regnam>                        
               <div class="errorMsg">{{err2}}</div>
-              <ion-button class="btn" color="dark" (click)="validateSignUp(regemail.value,regpass.value,regnam.value)" >Register</ion-button>
+              <ion-button class="btn" color="dark" (click)="validateSignUp(regemail.value,regpass.value,regnam.value)" routerLink="welcome">Register</ion-button>
               <ion-button class="btn" color="dark" (click)="toggleSignIn()" >Back</ion-button>
             </div>
         </div>   

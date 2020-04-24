@@ -132,6 +132,7 @@ export class AppComponent implements OnInit {
         this.validateLogin(email,pass);
       }
     });
+    this.clearErr();
   }
 
   popUpNewChannel(){

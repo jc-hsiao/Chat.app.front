@@ -5,11 +5,9 @@ import { ChatService} from 'src/app/services/chat.service';
 import { User } from 'src/app/models/user';
 import { Channel } from 'src/app/models/channel';
 import { DM } from 'src/app/models/dm';
-import { Message } from 'src/app/models/message';
 import { ActivatedRoute } from '@angular/router';
 import { LocationStrategy } from '@angular/common';
 
-import { MessageService} from 'src/app/services/message.service';
 import { SocketService } from 'src/app/services/socket.service'
 
 @Component({

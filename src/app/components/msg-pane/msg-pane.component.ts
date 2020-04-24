@@ -90,7 +90,7 @@ export class MsgPaneComponent implements OnInit {
         m = JSON.parse(message.body);
         this.messages.push(m);
         this.test();
-      });
+      });      
     });
   }
   
@@ -100,7 +100,11 @@ export class MsgPaneComponent implements OnInit {
   }
 
   deleteMsgById(id){
-    this.messageService.deleteMsg(id).subscribe();
+    this.messageService.deleteMsg(id).subscribe(m => {
+      var deleteId = m.id;
+      console.log(deleteId);
+    });
+    
   }
 
 }
