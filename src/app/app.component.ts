@@ -53,7 +53,10 @@ export class AppComponent implements OnInit {
   }
 
   validateLogin(email:string, pass:string){
+<<<<<<< HEAD
     
+=======
+>>>>>>> dev
     if(email == "" || pass== ""){
       this.err = "Some fields are empty!";
       return 0;
