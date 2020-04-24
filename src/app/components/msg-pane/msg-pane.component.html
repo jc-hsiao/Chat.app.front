@@ -1,18 +1,39 @@
+
+  <div class="overlay" padding [hidden]="emojiOverlayHidden">
+    <div class="container">
+      <div class="inner">
+        <div class="infoBox">
+          <h3>CHOOSE AN EMOJI</h3>
+          <div class="emoList">
+            <img *ngFor="let e of emojiList" [src]="e.image" (click)="reactEmoji(e.id)">
+          </div>
+          <div class="errorMsg">{{err}}</div>
+          <ion-button class="btn" color="dark" (click)="closePopUp()" >Cancel</ion-button>
+        </div>   
+      </div> 
+    </div>        
+  </div>
+
 <ion-list class="msgList">
 
-  
   <div class="msgBlock" *ngFor="let m of messages" lines="none">
     <!-- <ion-icon slot="start" ios="person-outline" md="person-sharp"></ion-icon> -->
     <ion-label>
       <ion-label>
         <span class="name">{{m.speaker.displayName}}</span>
         <span class="time">{{m.timeStamp}}</span>
-        <button class="del" (click)="deleteMsgById(m.id)" > <span class="x">X</span> </button>
+        <ion-icon name="happy" class="addEmoji" (click)="openEmojiWin(m.id)" ></ion-icon>        
+        <ion-icon name="close" class="del" (click)="deleteMsgById(m.id)"></ion-icon>
       </ion-label>
       <div class="content">{{m.content}}</div>
+
+      <ion-label class="slot" *ngFor="let e of m['emojiCounts']" (click)="agreeEmoji(e.emojiId, m.id);e.count=e.count+1"> 
+        <img [src]="idToImage(e.emojiId)"> {{e.count}} 
+      </ion-label>
+
     </ion-label>    
+  </div>
   
-  </div>  
 
 
 </ion-list>

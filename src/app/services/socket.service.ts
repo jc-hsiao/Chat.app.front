@@ -15,6 +15,9 @@ export class SocketService {
 
   //setup to listen
   initializeWebSocketConnection(){
+    if(this.stompClient != null){
+      this.stompClient.disconnect();
+    }
     let ws = new SockJS(environment.apiURL+"socket");
     this.stompClient = Stomp.over(ws);
     // let that = this;

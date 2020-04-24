@@ -22,7 +22,7 @@
               <input type="password" placeholder="password" #regpass>
               <input type="text" placeholder="display name" #regnam>                        
               <div class="errorMsg">{{err2}}</div>
-              <ion-button class="btn" color="dark" (click)="validateSignUp(regemail.value,regpass.value,regnam.value)" >Register</ion-button>
+              <ion-button class="btn" color="dark" (click)="validateSignUp(regemail.value,regpass.value,regnam.value)" routerLink="welcome">Register</ion-button>
               <ion-button class="btn" color="dark" (click)="toggleSignIn()" >Back</ion-button>
             </div>
         </div>   
@@ -35,7 +35,7 @@
       <div class="inner">
         <div class="infoBox">
           <h2>CREATE A NEW CHANNEL</h2>
-          <input type="text" placeholder="Channel Name" (focus)="clearErr()" #channelName>
+          <input type="text" placeholder="Channel Name" (focus)="clearErr()"  [(ngModel)]="channelInput" #channelName>
           <div class="errorMsg">{{err}}</div>
           <ion-button class="btn" color="dark" (click)="createNewChannel(channelName.value)" >Create</ion-button>
           <ion-button class="btn" color="dark" (click)="closePopUp()" >Cancel</ion-button>
@@ -49,7 +49,6 @@
       <div class="inner">
         <div class="infoBox">
           <h2>SEND A DM TO SOMEONE!</h2>
-
           <div class="select-style">
             <select [(ngModel)]="selectedLevel">
               <option value=null disabled >- Select A User -</option>
@@ -63,8 +62,8 @@
       </div> 
     </div>        
   </div>
-  <ion-split-pane class="blur" contentId="main-content">
 
+  <ion-split-pane class="blur" contentId="main-content">
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
 
