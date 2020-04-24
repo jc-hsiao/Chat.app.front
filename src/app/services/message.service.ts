@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, catchError } from 'rxjs/operators';
 import { Message } from 'src/app/models/message'
 
 @Injectable({
@@ -32,6 +32,14 @@ export class MessageService {
   deleteMsg(msgId:number){
     return this.http.delete<Message>(environment.apiURL+'msg/' + msgId).pipe( 
       tap(_ => console.log("deleting mesage with id: "+msgId+"..."))
+    );
+  }
+
+
+  deleteMessage(userId:number, chatId:number, text:string): Observable<Message>{
+    return this.http.delete<Message>(environment.apiURL+'msg/'+userId+"/"+text).pipe( 
+      tap(_ => console.log("deleted chat message"+text)),
+
     );
   }
 
