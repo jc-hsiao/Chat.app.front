@@ -35,16 +35,17 @@
 }
 
 .del{
-    display: block;
-    font-size: 18px;
-    padding: 10px; 
-    margin-left: 800px ; 
-    border-radius: 50%;
-    color: rgb(99, 20, 20);
-    border: #7b3f22 3px solid;
-    width: 42px;
-    height: 42pxx;  
-  
+    position: absolute;
+    right: 20px;
+    background: #f90;
+    color: #fff;
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    font-size: .75em;
+    font-weight: bold;
+    text-align: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
 }
 
 
