@@ -30,16 +30,8 @@ export class MessageService {
   }
 
   deleteMsg(msgId:number){
-    return this.http.delete<Message>(environment.apiURL+'msg/' + msgId).pipe( 
+    return this.http.delete<number>(environment.apiURL+'msg/' + msgId).pipe( 
       tap(_ => console.log("deleting mesage with id: "+msgId+"..."))
-    );
-  }
-
-
-  deleteMessage(userId:number, chatId:number, text:string): Observable<Message>{
-    return this.http.delete<Message>(environment.apiURL+'msg/'+userId+"/"+text).pipe( 
-      tap(_ => console.log("deleted chat message"+text)),
-
     );
   }
 

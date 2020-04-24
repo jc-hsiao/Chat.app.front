@@ -11,13 +11,3 @@
   <app-msg-pane (childEvent)="test($event)" ></app-msg-pane>
   <app-post-pane></app-post-pane>
 </ion-content>
-
-<div *ngIf="messageService.messages.length">
-
-  <h2>Delete essages</h2>
-  <button class="delete"
-  (click)="messageService.delete()">delete</button>
-  <div *ngFor='let message of messageService.messages'> {{message}}</div>
-  
-  </div>
-  

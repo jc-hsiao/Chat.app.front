@@ -100,11 +100,17 @@ export class MsgPaneComponent implements OnInit {
   }
 
   deleteMsgById(id){
-    this.messageService.deleteMsg(id).subscribe(m => {
-      var deleteId = m.id;
-      console.log(deleteId);
+    this.messageService.deleteMsg(id).subscribe(n => {
+      var deleteId = n;
+      var bye;
+      for(var i=0 ;i<this.messages.length;i++){
+        if(this.messages[i].id == deleteId){
+          bye = i;
+          break;
+        }
+      }
+      this.messages.splice(bye,1);      
     });
-    
   }
 
 }
