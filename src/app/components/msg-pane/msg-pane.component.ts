@@ -99,6 +99,10 @@ export class MsgPaneComponent implements OnInit {
       client.subscribe("/pool/"+this.chatId, (message) => { 
         var m = new Message;
         m = JSON.parse(message.body);
+        if(m.timeStamp.length>19){
+          m.timeStamp = m.timeStamp.substring(0,19);
+        }
+        m.timeStamp = m.timeStamp.replace('T',' ');
         this.messages.push(m);
         this.test();
       });      
