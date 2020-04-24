@@ -8,5 +8,5 @@ export class Message{
     content: string;
     timeStamp: string;
     replies: string;
-    reactionsCount: EmojiCount[];
+    emojiCounts: EmojiCount[];
 }

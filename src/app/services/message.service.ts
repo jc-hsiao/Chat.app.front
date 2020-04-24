@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { Message } from 'src/app/models/message'
 
@@ -34,5 +34,26 @@ export class MessageService {
       tap(_ => console.log("deleting mesage with id: "+msgId+"..."))
     );
   }
+
+  agreeEmoji(emojiId:number, msgId:number): Observable<Message>{
+    return this.http.put<Message>(environment.apiURL+'msg/add/'+emojiId+"/to/"+msgId, {}).pipe( 
+      tap(_ => console.log("you increment some emoji count")),
+    );
+  }
+
+  reactEmoji(emojiId:number, msgId:number): Observable<Message>{
+    return this.http.put<Message>(environment.apiURL+'msg/react/'+msgId+"/with/"+emojiId, {}).pipe( 
+      tap(_ => console.log("you react a message with an emoji")),
+      catchError(this.handleError<Message>(`OOPS`,null))
+    );
+  }
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {  
+      console.error(error);   
+      console.log(`${operation} failed: ${error.message}`);
+      return of(result as T);
+    };
+  }
+
 
 }

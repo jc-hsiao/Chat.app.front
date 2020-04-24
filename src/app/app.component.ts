@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { UserService} from 'src/app/services/user.service';
 import { ChatService } from 'src/app/services/chat.service';
+import { EmojiService } from 'src/app/services/emoji.service';
 import { User } from 'src/app/models/user';
 import { Channel } from 'src/app/models/channel'
 import { DM } from 'src/app/models/dm'
@@ -20,6 +21,7 @@ export class AppComponent implements OnInit {
   addChannelOverlayHidden:boolean = true;
   addDMOverlayHidden: boolean = true;
   selectedLevel:number = null;
+  channelInput:string = "";
 
   constructor(
     public modalCtrl: ModalController,
@@ -28,6 +30,7 @@ export class AppComponent implements OnInit {
     private statusBar: StatusBar,
     private userService: UserService,
     private chatService: ChatService,
+    private emojiService :EmojiService,
     private el: ElementRef
   ) {
     this.initializeApp();
@@ -51,6 +54,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
   }
+
 
   validateLogin(email:string, pass:string){
     if(email == "" || pass== ""){
@@ -82,6 +86,7 @@ export class AppComponent implements OnInit {
           //have to remove current user from this list
           this.removeCurrentUserFromArray(all);
         })
+        this.emojiService.setUpAllEmoji();
 
         this.toggleBlur();
         let overlay = this.el.nativeElement.querySelector(".overlay");
@@ -166,17 +171,24 @@ export class AppComponent implements OnInit {
     }
   }
 
+  
+
+  clearText(){
+    this.channelInput = "";
+    this.selectedLevel = null;
+  }
+
   clearErr(){
     this.err = "";
     this.err2 = "";
   }
-
   closePopUp(){
     this.loginOverlayHidden = true;
     this.addChannelOverlayHidden = true;
     this.addDMOverlayHidden = true;
     this.toggleBlur();
     this.clearErr();
+    this.clearText();
   }
 
   toggleBlur(){
